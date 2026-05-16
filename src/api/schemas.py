@@ -16,6 +16,22 @@ class ModelTrainingRequest(BaseModel):
     hyperparameters: dict[str, Any] | None = None
 
 
+class PredictionRequest(BaseModel):
+    model_name: str = Field(..., min_length=1)
+    features: dict[str, float] = Field(
+        ...,
+        description="Feature values keyed by column name, e.g. {'radius_mean': 17.99, ...}"
+    )
+
+
+class PredictionResponse(BaseModel):
+    model_name: str
+    prediction: int
+    label: str
+    probability_malignant: float
+    probability_benign: float
+
+
 class HealthResponse(BaseModel):
     status: str
     project: str

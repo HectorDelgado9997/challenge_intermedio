@@ -4,7 +4,7 @@ from typing import Any
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
 
-from src.api.schemas import HealthResponse, ModelTrainingRequest
+from src.api.schemas import HealthResponse, ModelTrainingRequest, PredictionResponse
 from src.config.settings import OUTPUTS_DIR, VALID_MODEL_NAMES
 from src.data.load_data import load_dataset
 from src.data.validate_data import encode_target, validate_dataset
@@ -313,4 +313,45 @@ def get_metrics_summary() -> dict[str, Any]:
         raise HTTPException(
             status_code=500,
             detail=f"Unexpected error while retrieving metrics summary: {exc}",
+        ) from exc
+
+
+@router.post("/models/predict", response_model=PredictionResponse)
+def predict(request: PredictionRequest) -> dict[str, Any]:
+    """
+    Run a prediction using a previously trained model loaded from MLflow.
+    """
+    try:
+        if request.model_name not in VALID_MODEL_NAMES:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"Unsupported model_name '{request.model_name}'. "
+                    f"Valid options are: {VALID_MODEL_NAMES}"
+                ),
+            )
+
+        import mlflow.sklearn
+        model = mlflow.sklearn.load_model(f"models:/{request.model_name}/latest")
+
+        input_df = pd.DataFrame([request.features])
+        prediction = int(model.predict(input_df)[0])
+        probabilities = model.predict_proba(input_df)[0]
+
+        return {
+            "model_name": request.model_name,
+            "prediction": prediction,
+            "label": "Malignant" if prediction == 1 else "Benign",
+            "probability_malignant": round(float(probabilities[1]), 4),
+            "probability_benign": round(float(probabilities[0]), 4),
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as exc:
+        logger.error("Unexpected error in /models/predict: %s", exc)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unexpected error while running prediction: {exc}",
         ) from exc
