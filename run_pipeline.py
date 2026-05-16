@@ -1,5 +1,6 @@
 from src.data.load_data import load_dataset
 from src.data.validate_data import encode_target, validate_dataset
+from src.preprocessing.preprocess import create_train_test_split, split_features_target
 from src.utils.logger import get_logger
 
 
@@ -11,9 +12,19 @@ def main() -> None:
     target_column = validate_dataset(df)
     df = encode_target(df, target_column)
 
-    logger.info("Pipeline validation stage completed.")
-    logger.info("Final dataset shape: %s", df.shape)
-    logger.info("Target distribution:\n%s", df[target_column].value_counts())
+    X, y = split_features_target(
+        df=df,
+        target_column=target_column,
+        columns_to_drop=["id"],
+    )
+
+    X_train, X_test, y_train, y_test = create_train_test_split(X, y)
+
+    logger.info("Preprocessing stage completed.")
+    logger.info("Final X_train shape: %s", X_train.shape)
+    logger.info("Final X_test shape: %s", X_test.shape)
+    logger.info("Final y_train shape: %s", y_train.shape)
+    logger.info("Final y_test shape: %s", y_test.shape)
 
 
 if __name__ == "__main__":
