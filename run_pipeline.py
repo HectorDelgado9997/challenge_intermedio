@@ -3,6 +3,7 @@ import pandas as pd
 from src.config.settings import OUTPUTS_DIR, VALID_MODEL_NAMES
 from src.data.load_data import load_dataset
 from src.data.validate_data import encode_target, validate_dataset
+from src.mlops.mlflow_tracking import log_model_to_mlflow
 from src.models.evaluate import (
     evaluate_model,
     save_confusion_matrix_plot,
@@ -77,6 +78,16 @@ def main() -> None:
             model_name=model_name,
         )
 
+        mlflow_run_id = log_model_to_mlflow(
+            model_name=model_name,
+            model=trained_model,
+            X_train=X_train,
+            metrics=test_metrics,
+            cv_results=cv_results,
+            confusion_matrix_path=confusion_matrix_path,
+            roc_curve_path=roc_curve_path,
+        )
+
         model_summary = {
             "model_name": model_name,
             "cv_mean_f1": cv_results["cv_mean"],
@@ -88,17 +99,19 @@ def main() -> None:
             "confusion_matrix": test_metrics["confusion_matrix"],
             "confusion_matrix_path": str(confusion_matrix_path),
             "roc_curve_path": str(roc_curve_path),
+            "mlflow_run_id": mlflow_run_id,
         }
 
         metrics_summary.append(model_summary)
 
         logger.info(
             "Completed workflow for model: %s | "
-            "cv_mean_f1=%.4f | test_f1=%.4f | test_auc=%.4f",
+            "cv_mean_f1=%.4f | test_f1=%.4f | test_auc=%.4f | mlflow_run_id=%s",
             model_name,
             cv_results["cv_mean"],
             test_metrics["f1_score"],
             test_metrics["roc_auc"],
+            mlflow_run_id,
         )
 
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -106,7 +119,7 @@ def main() -> None:
     metrics_summary_path = OUTPUTS_DIR / "metrics_summary.csv"
     pd.DataFrame(metrics_summary).to_csv(metrics_summary_path, index=False)
 
-    logger.info("Training and evaluation completed for all models.")
+    logger.info("Training, evaluation and MLflow logging completed for all models.")
     logger.info("Metrics summary saved to %s", metrics_summary_path)
 
 
