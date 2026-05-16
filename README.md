@@ -6,27 +6,27 @@
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-blue)](https://scikit-learn.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 
-## 📌 Descripción
+##  Descripción
 
-Sistema de clasificación binaria que predice si un tumor de mama es **maligno o benigno**
-a partir de mediciones celulares, utilizando el dataset
-**Breast Cancer Wisconsin Diagnostic** de UCI.
+Sistema de clasificación binaria que a partir de mediciones celulares predice si un tumor es **maligno o benigno**
+Se utiliza el dataset:
+**Breast Cancer Wisconsin Diagnostic** .
 
 El proyecto implementa un pipeline completo de Machine Learning con seguimiento
 de experimentos mediante MLflow, pruebas automatizadas con pytest, y una
-arquitectura modular orientada a buenas prácticas de MLOps.
+arquitectura modular.
 
 ---
 
-## 🎯 Objetivo
+##  Objetivo
 
 Entrenar, evaluar y comparar tres modelos de clasificación — Logistic Regression,
-KNN y Decision Tree — sobre el dataset de cáncer de mama, registrando
+KNN y Decision Tree — sobre el dataset de cáncer de mama, se registran
 automáticamente todos los experimentos con MLflow.
 
 ---
 
-## 📁 Estructura del Repositorio
+##  Estructura del Repositorio
 
 ```text
 challenge_intermedio/
@@ -55,7 +55,7 @@ challenge_intermedio/
 
 ---
 
-## 🤖 Modelos Entrenados
+##  Modelos Entrenados
 
 | Modelo               | Tipo              | Librería     |
 |----------------------|-------------------|--------------|
@@ -65,7 +65,7 @@ challenge_intermedio/
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 | Propiedad       | Valor                           |
 |-----------------|---------------------------------|
@@ -77,7 +77,7 @@ challenge_intermedio/
 
 ---
 
-## ⚙️ Instalación y Ejecución Rápida
+##  Instalación y Ejecución Rápida
 
 ```bash
 # 1. Clonar el repositorio
@@ -103,7 +103,8 @@ mlflow ui
 
 ---
 
-## 🔁 Pipeline Carga de datos → Validación → Encoding → Split
+##  Pipeline
+Carga de datos → Validación → Encoding → Split
 └── Por cada modelo:
 Cross-validation (5-fold, F1)
 Entrenamiento
@@ -113,7 +114,7 @@ Logging en MLflow
 └── Exportar metrics_summary.csv
 ---
 
-## 📈 Métricas de Evaluación
+##  Métricas de Evaluación
 
 | Métrica          | Descripción                                      |
 |------------------|--------------------------------------------------|
@@ -125,7 +126,7 @@ Logging en MLflow
 
 ---
 
-## 🧪 Tests
+##  Tests
 
 ```bash
 pytest        # Ejecutar todos los tests
@@ -134,7 +135,7 @@ pytest -v     # Modo verbose
 
 ---
 
-## 📚 Documentación
+##  Documentación
 
 | Archivo                        | Contenido                            |
 |--------------------------------|--------------------------------------|
@@ -146,7 +147,7 @@ pytest -v     # Modo verbose
 
 ---
 
-## 🛠️ Stack Tecnológico
+##  Stack Tecnológico
 
 | Herramienta    | Uso                        |
 |----------------|----------------------------|
@@ -162,7 +163,7 @@ pytest -v     # Modo verbose
 
 ---
 
-## 👤 Autor
+##  Autor
 
-**Héctor Delgado**
+**Héctor Manuel Delgado Zambrano**
 [![GitHub](https://img.shields.io/badge/GitHub-HectorDelgado9997-black)](https://github.com/HectorDelgado9997)
