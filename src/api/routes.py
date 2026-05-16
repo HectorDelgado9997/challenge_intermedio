@@ -4,7 +4,7 @@ from typing import Any
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
 
-from src.api.schemas import HealthResponse, ModelTrainingRequest, PredictionResponse
+from src.api.schemas import HealthResponse, ModelTrainingRequest, PredictionRequest, PredictionResponse
 from src.config.settings import OUTPUTS_DIR, VALID_MODEL_NAMES
 from src.data.load_data import load_dataset
 from src.data.validate_data import encode_target, validate_dataset
