@@ -4,8 +4,8 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue)](https://www.python.org/)
 [![MLflow](https://img.shields.io/badge/MLflow-Tracking-orange)](https://mlflow.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-blue)](https://scikit-learn.org/)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)
-[![CI](https://github.com/HectorDelgado9997/challenge_intermedio/actions/workflows/ci.yml/badge.svg)](https://github.com/HectorDelgado9997/challenge_intermedio/actions/workflows/ci.yml)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
+[![CI](https://github.com/HectorDelgado9997/challenge_intermedio/actions/workflows/ci.yml/badge.svg)](https://github.com/HectorDelgado9997/challenge_intermedio/actions/workflows/ci.yml)
 
 ##  Descripción
 
